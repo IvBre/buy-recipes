@@ -25,7 +25,6 @@ dependencies {
     // Spring Boot Starters
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // Kotlin specific
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -39,10 +38,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("io.mockk:mockk:1.13.8")
-    testImplementation("com.ninja-squad:springmockk:4.0.2")
-    testImplementation("org.testcontainers:postgresql:1.19.3")
-    testImplementation("org.testcontainers:junit-jupiter:1.19.3")
+    testImplementation("io.mockk:mockk:1.14.3")
+    testImplementation("org.testcontainers:postgresql:1.21.2")
 }
 
 kotlin {

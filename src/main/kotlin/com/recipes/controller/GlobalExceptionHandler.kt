@@ -1,7 +1,6 @@
 package com.recipes.controller
 
 import com.recipes.controller.response.ErrorResponse
-import jakarta.validation.ConstraintViolationException
 import org.springframework.beans.TypeMismatchException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
@@ -40,8 +39,7 @@ class GlobalExceptionHandler {
         MethodArgumentNotValidException::class,
         TypeMismatchException::class,
         MissingRequestValueException::class,
-        HttpMessageNotReadableException::class,
-        ConstraintViolationException::class
+        HttpMessageNotReadableException::class
     )
     fun handleBadRequestExceptions(
         ex: Exception,
@@ -57,11 +55,6 @@ class GlobalExceptionHandler {
             is TypeMismatchException -> "Parameter '${ex.value}' should be of type ${ex.requiredType?.simpleName}"
             is MissingRequestValueException -> "Required parameter is missing"
             is HttpMessageNotReadableException -> "Invalid request body format"
-            is ConstraintViolationException -> {
-                ex.constraintViolations.joinToString(", ") {
-                    "${it.propertyPath}: ${it.message}"
-                }
-            }
             else -> "Bad request"
         }
 
@@ -75,7 +68,7 @@ class GlobalExceptionHandler {
         ex: HttpRequestMethodNotSupportedException,
         request: WebRequest
     ): ResponseEntity<ErrorResponse> {
-        logger.warn("405 Method Not Allowed: {} for path {}",
+        logger.warn("Method Not Allowed: {} for path {}",
             ex.message, request.getDescription(false))
         return createErrorResponse(
             HttpStatus.METHOD_NOT_ALLOWED,
@@ -89,7 +82,7 @@ class GlobalExceptionHandler {
         ex: DataIntegrityViolationException,
         request: WebRequest
     ): ResponseEntity<ErrorResponse> {
-        logger.error("409 Conflict - Database constraint violation: {}", ex.message, ex)
+        logger.error("Database constraint violation: {}", ex.message, ex)
         return createErrorResponse(
             HttpStatus.CONFLICT,
             "Database constraint violation",
@@ -102,7 +95,7 @@ class GlobalExceptionHandler {
         ex: Exception,
         request: WebRequest
     ): ResponseEntity<ErrorResponse> {
-        logger.error("500 Internal Server Error - Uncaught exception: ", ex)
+        logger.error("Internal Server Error - Uncaught exception: ", ex)
         return createErrorResponse(
             HttpStatus.INTERNAL_SERVER_ERROR,
             "An unexpected error occurred",
