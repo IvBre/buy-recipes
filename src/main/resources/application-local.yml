@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/recipes_db
+    username: postgres
+    password: postgres
+
+logging:
+  level:
+    root: INFO
+    com.recipes: DEBUG

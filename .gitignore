@@ -22,10 +22,6 @@ out/
 # VS Code
 .vscode/
 
-# Local configuration
-application-local.yml
-application-local.properties
-
 # Test reports
 **/test-results/
 **/reports/
